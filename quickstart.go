@@ -112,7 +112,7 @@ func main() {
 
 	// Prints the number of slides and elements in a sample presentation:
 	// https://docs.google.com/presentation/d/1EAYk18WDjIG-zp_0vLm3CsfQh_i8eXc67Jo2O9C6Vuc/edit
-	presentationId := "1EAYk18WDjIG-zp_0vLm3CsfQh_i8eXc67Jo2O9C6Vuc"
+	presentationId := "12s2-UZMsz8o206oM5Y-lgu30R8MTab2QgQgVgX_3G3U"
 	presentation, err := srv.Presentations.Get(presentationId).Do()
 	if err != nil {
 		log.Fatalf("Unable to retrieve data from presentation. %v", err)
@@ -122,6 +122,13 @@ func main() {
 	for i, slide := range presentation.Slides {
 		fmt.Printf("- Slide #%d contains %d elements.\n", (i + 1),
 			len(slide.PageElements))
+		if p := slide.SlideProperties; p != nil {
+			np := p.NotesPage
+			notesId := np.NotesProperties.SpeakerNotesObjectId
+			elems := slide.PageElements
+			fmt.Printf("%v", elems)
+			fmt.Printf("notesId: %s", notesId)
+		}
 	}
 
 }
